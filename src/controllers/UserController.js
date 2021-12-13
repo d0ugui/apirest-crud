@@ -3,10 +3,19 @@ const users = require('../mocks/users');
 
 //* Criando módulo
 module.exports = {
-  listUsers(req, res) {
+  listUsers(request, response) {
+    const { order } = request.query
+    const sortedUsers = users.sort((a, b) => {
+      if (order === 'desc') {
+        return a.id < b.id ? 1 : -1;
+      }
+
+      return a.id > b.id ? 1 : -1;
+    })
+
     //* Retornando response
-    res.writeHead(200, { 'Content-Type': 'application/json' });
+    response.writeHead(200, { 'Content-Type': 'application/json' });
     //* Retornando os dados
-    res.end(JSON.stringify(users));
+    response.end(JSON.stringify(sortedUsers));
   }
 }
