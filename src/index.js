@@ -5,7 +5,7 @@ const { URL } = require('url');
 const routes = require('../routes');
 
 //* Criando o servidor
-const server = http.createServer((request, responde) => {
+const server = http.createServer((request, response) => {
   //* Retornando um objeto com as propriedades da URL
   const parsedUrl = new URL(`http://localhost:3000${request.url}`);
 
@@ -31,10 +31,16 @@ const server = http.createServer((request, responde) => {
     request.query = Object.fromEntries(parsedUrl.searchParams);
     request.params = { id };
 
-    route.handler(request, responde);
+    //* Injetando props no response
+    response.send = (statusCode, body) => {
+      response.writeHead(statusCode, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(body));
+    }
+
+    route.handler(request, response);
   } else {
-    responde.writeHead(404, { 'Content-Type': 'text/html' });
-    responde.end(`Cannot ${request.method} ${parsedUrl.pathname}`)
+    response.writeHead(404, { 'Content-Type': 'text/html' });
+    response.end(`Cannot ${request.method} ${parsedUrl.pathname}`)
   }
  
 })
