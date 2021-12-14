@@ -14,8 +14,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias e bibliotecas:
 Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
-$ git clone https://github.com/d0ugui/crud.git
-$ cd crud
+$ git clone https://github.com/d0ugui/apirest-crud.git
+$ cd apirest-crud
 ```
 
 Para iniciá-lo, siga os passos abaixo:
